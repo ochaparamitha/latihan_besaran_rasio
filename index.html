@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Asesmen Formatif Matematika - Rasio & Faktor Pengali</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .katex-display {
+            margin: 0.5em 0 !important;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 4px 0;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white; color: black; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-sky-200">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-sky-200">
+                    $\div$
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-800 text-sm leading-tight">MathQuiz: Rasio</h1>
+                    <p class="text-[11px] text-slate-500">Asesmen Formatif Interaktif</p>
+                </div>
+            </div>
+            <div id="header-user-badge" class="hidden items-center text-xs font-semibold bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full border border-sky-200">
+                <span id="badge-nama">Siswa</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-md w-full mx-auto p-4 flex-grow flex flex-col justify-center">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: IDENTITAS & PETUNJUK (WELCOME)   -->
+        <!-- ========================================== -->
+        <section id="screen-welcome" class="space-y-5 my-auto py-2">
+            <div class="bg-gradient-to-br from-sky-600 via-indigo-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+                <div class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold mb-3">
+                    Matematika SD/SMP
+                </div>
+                <h2 class="text-2xl font-extrabold tracking-tight mb-2">Asesmen Rasio & Faktor Pengali</h2>
+                <p class="text-sky-100 text-xs leading-relaxed">
+                    Uji pemahamanmu mengenai perbandingan, nilai sebenarnya, dan faktor pengali secara mandiri dan interaktif!
+                </p>
+            </div>
+
+            <!-- Form Identitas -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                    <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Identitas Peserta Didik
+                </h3>
+                
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Nama Lengkap</label>
+                    <input type="text" id="input-nama" placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm">
+                </div>
+            </div>
+
+            <!-- Petunjuk Pengerjaan -->
+            <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-4 text-xs text-amber-900 space-y-2">
+                <div class="font-bold text-amber-800 flex items-center gap-1.5 text-sm">
+                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Petunjuk Pengerjaan
+                </div>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 pl-1">
+                    <li>Terdapat <strong>10 soal isian singkat</strong>.</li>
+                    <li>Jawablah berupa angka murni (contoh: <code>12</code>) atau menyertakan variabel (contoh: <code>Q = 20</code>).</li>
+                    <li>Gunakan angka matematika untuk mendapatkan <strong>Skor Penuh (10 poin)</strong>. Penulisan kata angka Bahasa Indonesia (contoh: <i>"dua belas"</i>) tetap bernilai <strong>5 poin</strong>.</li>
+                    <li>Klik tombol "Kirim & Lihat Hasil" setelah menyelesaikan seluruh soal.</li>
+                </ul>
+            </div>
+
+            <button onclick="startAssessment()" class="w-full py-3.5 px-4 bg-sky-600 hover:bg-sky-700 active:scale-[0.99] transition-all text-white font-bold rounded-xl shadow-lg shadow-sky-200 text-sm flex items-center justify-center gap-2">
+                Mulai Asesmen Sekarang
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: LEMBAR ASESMEN (QUESTIONS)       -->
+        <!-- ========================================== -->
+        <section id="screen-assessment" class="hidden space-y-4 my-auto py-2">
+            
+            <!-- Indicator Progress & Grid Jump -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-600">
+                    <span id="question-progress-text">Soal 1 dari 10</span>
+                    <span id="answered-count-badge" class="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full text-[11px]">Terjawab: 0/10</span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-sky-500 h-full w-10 transition-all duration-300"></div>
+                </div>
+
+                <!-- Number Grid Navigator -->
+                <div id="question-grid-nav" class="grid grid-cols-10 gap-1 pt-1">
+                    <!-- Dynamic button 1..10 generated via JS -->
+                </div>
+            </div>
+
+            <!-- Card Soal Aktif -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4 relative">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-100" id="q-topic-badge">
+                        Topik Soal
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium">Bobot: 10 Poin</span>
+                </div>
+
+                <div id="question-content" class="text-slate-800 text-sm leading-relaxed space-y-3 pt-1">
+                    <!-- Text / Formula / Table rendered dynamically -->
+                </div>
+
+                <!-- Input Jawaban Siswa -->
+                <div class="pt-2 border-t border-slate-100 space-y-2">
+                    <label class="block text-xs font-semibold text-slate-700">Jawaban Kamu:</label>
+                    <div class="relative">
+                        <input type="text" id="answer-input" oninput="saveCurrentAnswer()" placeholder="Ketik jawaban kamu di sini..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-base font-semibold text-slate-800 placeholder:font-normal placeholder:text-slate-400 placeholder:text-sm">
+                        <button onclick="clearCurrentAnswer()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-slate-500 italic">Contoh format: <code>12</code>, <code>Q = 20</code>, atau <code>dua puluh</code>.</p>
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="flex items-center justify-between gap-3 pt-1">
+                <button id="btn-prev" onclick="navigateQuestion(-1)" class="flex-1 py-3 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Sebelumnya
+                </button>
+                <button id="btn-next" onclick="navigateQuestion(1)" class="flex-1 py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-1 shadow-md shadow-sky-100">
+                    Selanjutnya
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+
+            <!-- Finish Button -->
+            <button id="btn-submit" onclick="confirmSubmit()" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-emerald-100 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                Kirim & Lihat Hasil
+            </button>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: HASIL & PEMBAHASAN (RESULTS)    -->
+        <!-- ========================================== -->
+        <section id="screen-results" class="hidden space-y-5 my-auto py-2">
+            
+            <!-- Result Summary Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-lg text-center space-y-4">
+                <div class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-semibold text-slate-600">
+                    Laporan Hasil Asesmen
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-800" id="res-student-name">Budi Santoso</h2>
+                </div>
+
+                <!-- Big Score Badge -->
+                <div class="py-2 flex flex-col items-center justify-center">
+                    <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-sky-500 via-indigo-500 to-indigo-600 p-1 shadow-xl flex items-center justify-center">
+                        <div class="w-full h-full bg-white rounded-full flex flex-col items-center justify-center">
+                            <span class="text-3xl font-black text-slate-800 leading-none" id="res-total-score">0</span>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 mt-1">Skor / 100</span>
+                        </div>
+                    </div>
+                    <div id="res-predicate-badge" class="mt-3 px-4 py-1.5 rounded-full text-xs font-bold">
+                        Predikat
+                    </div>
+                </div>
+
+                <!-- Feedback Stats -->
+                <div class="grid grid-cols-3 gap-2 pt-2 text-center border-t border-slate-100">
+                    <div class="bg-emerald-50 border border-emerald-100 p-2.5 rounded-xl">
+                        <div class="text-lg font-bold text-emerald-700" id="stat-full">0</div>
+                        <div class="text-[10px] font-semibold text-emerald-800">Benar (10pt)</div>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-100 p-2.5 rounded-xl">
+                        <div class="text-lg font-bold text-amber-700" id="stat-partial">0</div>
+                        <div class="text-[10px] font-semibold text-amber-800">Kata Angka (5pt)</div>
+                    </div>
+                    <div class="bg-rose-50 border border-rose-100 p-2.5 rounded-xl">
+                        <div class="text-lg font-bold text-rose-700" id="stat-wrong">0</div>
+                        <div class="text-[10px] font-semibold text-rose-800">Salah (0pt)</div>
+                    </div>
+                </div>
+
+                <!-- Qualitative Recommendation Box -->
+                <div id="res-recommendation-box" class="p-3.5 rounded-xl text-xs text-left leading-relaxed">
+                    <!-- Dynamic feedback content -->
+                </div>
+            </div>
+
+            <!-- Detailed Question Breakdown Header -->
+            <div class="flex items-center justify-between px-1">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                    <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Pembahasan Langkah demi Langkah
+                </h3>
+                <span class="text-[11px] text-slate-500">10 Soal</span>
+            </div>
+
+            <!-- Pembahasan Cards Container -->
+            <div id="solutions-container" class="space-y-4">
+                <!-- Solutions injected dynamically via JS -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3 no-print pt-2">
+                <button onclick="resetAssessment()" class="flex-1 py-3 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Coba Lagi
+                </button>
+                <button onclick="window.print()" class="flex-1 py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-1.5 shadow-md shadow-sky-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Cetak Hasil
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-slate-400 text-[11px] border-t border-slate-200/60 bg-white no-print mt-6">
+        <p>Aplikasi Asesmen Formatif Matematika SPA &bull; Berbasis Mobile First & KaTeX</p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC & ASSESSMENT ENGINE       -->
+    <!-- ========================================== -->
+    <script>
+        // Global State
+        let currentUser = { name: '' };
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(10).fill('');
+
+        // Master Soal Asesmen (10 Soal Isian)
+        const questionsData = [
+            {
+                id: 1,
+                topic: "Faktor Pengali Dasar",
+                title: "Soal 1: Pemahaman Konsep Faktor Pengali",
+                text: "Jika perbandingan besaran $A : B = 2 : 3$ dan nilai besaran $A = 8$, berapakah <strong>faktor pengalinya</strong>?",
+                expected: 4,
+                varName: "Faktor",
+                solutionSteps: [
+                    "Rumus Emas Faktor Pengali: $\\text{Faktor} = \\text{Besaran Diketahui} \\div \\text{Rasio Diketahui}$",
+                    "$\ mext{Faktor} = 8 \\div 2 = 4$",
+                    "Jadi, faktor pengalinya adalah **4**."
+                ]
+            },
+            {
+                id: 2,
+                topic: "Perkalian Rasio (Nilai Kedua)",
+                title: "Soal 2: Menentukan Besaran Kedua ($Q$)",
+                text: "Diketahui perbandingan $P : Q = 3 : 5$. Jika besaran $P = 12$, tentukan nilai besaran $Q$.",
+                expected: 20,
+                varName: "Q",
+                solutionSteps: [
+                    "Langkah 1 (Cari Faktor Pengali): $\\text{Faktor} = P_{\\text{sebenarnya}} \\div P_{\\text{rasio}} = 12 \\div 3 = 4$",
+                    "Langkah 2 (Hitung Besaran $Q$): $Q = \\text{Rasio } Q \\times \\text{Faktor} = 5 \\times 4 = 20$",
+                    "Jadi, nilai besaran $Q$ adalah **20**."
+                ]
+            },
+            {
+                id: 3,
+                topic: "Perkalian Rasio (Nilai Pertama)",
+                title: "Soal 3: Menentukan Besaran Pertama ($X$)",
+                text: "Diketahui perbandingan $X : Y = 4 : 7$. Jika nilai $Y = 35$, tentukan nilai besaran $X$.",
+                expected: 20,
+                varName: "X",
+                solutionSteps: [
+                    "Langkah 1 (Cari Faktor Pengali): $\\text{Faktor} = Y_{\\text{sebenarnya}} \\div Y_{\\text{rasio}} = 35 \\div 7 = 5$",
+                    "Langkah 2 (Hitung Besaran $X$): $X = \\text{Rasio } X \\times \\text{Faktor} = 4 \\times 5 = 20$",
+                    "Jadi, nilai besaran $X$ adalah **20**."
+                ]
+            },
+            {
+                id: 4,
+                topic: "Tabel Rasio Sederhana",
+                title: "Soal 4: Melengkapi Tabel Rasio Kelompok",
+                text: `Lengkapi isian tabel perbandingan kelompok rekreasi berikut:
+                <div class="my-3 overflow-x-auto">
+                    <table class="w-full border-collapse border border-slate-300 text-xs text-center bg-slate-50 rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-sky-100 text-sky-900 font-bold">
+                                <th class="border border-slate-300 p-2">Kategori</th>
+                                <th class="border border-slate-300 p-2">Angka Rasio</th>
+                                <th class="border border-slate-300 p-2">Jumlah Sebenarnya</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-slate-300 p-2 font-medium">Anak-anak</td>
+                                <td class="border border-slate-300 p-2">3</td>
+                                <td class="border border-slate-300 p-2 font-bold text-sky-700">15 orang</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-2 font-medium">Orang Dewasa</td>
+                                <td class="border border-slate-300 p-2">5</td>
+                                <td class="border border-slate-300 p-2 font-bold text-amber-600">[ ? ]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                Berapakah jumlah <strong>Orang Dewasa sebenarnya</strong>?`,
+                expected: 25,
+                varName: "Orang Dewasa",
+                solutionSteps: [
+                    "Hitung Faktor Pengali dari Anak-anak: $\\text{Faktor} = 15 \\div 3 = 5$",
+                    "Hitung Jumlah Orang Dewasa: $\\text{Rasio Dewasa} \\times \\text{Faktor} = 5 \\times 5 = 25$",
+                    "Jadi, jumlah Orang Dewasa sebenarnya adalah **25 orang**."
+                ]
+            },
+            {
+                id: 5,
+                topic: "Aplikasi Rasio $5:8$",
+                title: "Soal 5: Menghitung Besaran Sebenarnya ($Y$)",
+                text: "Diketahui perbandingan dua besaran $X : Y = 5 : 8$. Jika nilai $X = 25$, berapakah nilai besaran $Y$?",
+                expected: 40,
+                varName: "Y",
+                solutionSteps: [
+                    "Langkah 1 (Faktor Pengali): $\\text{Faktor} = X_{\\text{sebenarnya}} \\div X_{\\text{rasio}} = 25 \\div 5 = 5$",
+                    "Langkah 2 (Nilai $Y$): $Y = \\text{Rasio } Y \\times \\text{Faktor} = 8 \\times 5 = 40$",
+                    "Jadi, nilai besaran $Y$ adalah **40**."
+                ]
+            },
+            {
+                id: 6,
+                topic: "Tabel Rasio Harga",
+                title: "Soal 6: Melengkapi Tabel Harga Bibit",
+                text: `Lengkapi tabel harga paket bibit tanaman berikut:
+                <div class="my-3 overflow-x-auto">
+                    <table class="w-full border-collapse border border-slate-300 text-xs text-center bg-slate-50 rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-indigo-100 text-indigo-900 font-bold">
+                                <th class="border border-slate-300 p-2">Banyak Bibit</th>
+                                <th class="border border-slate-300 p-2">Harga Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-slate-300 p-2 font-medium">2 bibit</td>
+                                <td class="border border-slate-300 p-2 font-bold text-slate-700">Rp 15.000</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-slate-300 p-2 font-medium">6 bibit</td>
+                                <td class="border border-slate-300 p-2 font-bold text-amber-600">[ ? ]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                Berapakah <strong>Harga Total untuk 6 bibit</strong>? (Tuliskan angkanya saja, misal <code>45000</code>).`,
+                expected: 45000,
+                varName: "Harga",
+                solutionSteps: [
+                    "Langkah 1 (Faktor Pengali Bibit): $\\text{Faktor} = 6 \\div 2 = 3$",
+                    "Langkah 2 (Hitung Harga Total): $\\text{Harga} = 3 \\times 15.000 = 45.000$",
+                    "Jadi, harga untuk 6 bibit adalah **Rp 45.000** (Jawaban angka: **45000**)."
+                ]
+            },
+            {
+                id: 7,
+                topic: "Pembagian Rasio (Mencari Awal)",
+                title: "Soal 7: Menentukan Besaran $A$ dengan Pembagian",
+                text: "Jika perbandingan $A : B = 2 : 5$ dan besaran $B = 20$, tentukan nilai besaran $A$.",
+                expected: 8,
+                varName: "A",
+                solutionSteps: [
+                    "Faktor Pengali dari $B$: $\\text{Faktor} = B_{\\text{sebenarnya}} \\div B_{\\text{rasio}} = 20 \\div 5 = 4$",
+                    "Hitung Nilai $A$: $A = \\text{Rasio } A \\times \\text{Faktor} = 2 \\times 4 = 8$",
+                    "Jadi, nilai besaran $A$ adalah **8**."
+                ]
+            },
+            {
+                id: 8,
+                topic: "Persamaan Variabel $S$",
+                title: "Soal 8: Menentukan Variabel $S$",
+                text: "Diketahui $R : S = 3 : 8$. Jika besaran $R = 18$, tentukan nilai variabel $S$.",
+                expected: 48,
+                varName: "S",
+                solutionSteps: [
+                    "Faktor Pengali: $\\text{Faktor} = 18 \\div 3 = 6$",
+                    "Nilai $S$: $S = \\text{Rasio } S \\times \\text{Faktor} = 8 \\times 6 = 48$",
+                    "Jadi, nilai variabel $S$ adalah **48**."
+                ]
+            },
+            {
+                id: 9,
+                topic: "Hitung Faktor dari Besaran Kedua",
+                title: "Soal 9: Menghitung Faktor Pengali ($Q = 36$)",
+                text: "Diketahui perbandingan $P : Q = 4 : 9$ dan nilai $Q = 36$. Berapakah <strong>faktor pengalinya</strong>?",
+                expected: 4,
+                varName: "Faktor",
+                solutionSteps: [
+                    "Gunakan Rumus Emas: $\\text{Faktor} = Q_{\\text{sebenarnya}} \\div Q_{\\text{rasio}}$",
+                    "$\\text{Faktor} = 36 \\div 9 = 4$",
+                    "Jadi, faktor pengalinya adalah **4**."
+                ]
+            },
+            {
+                id: 10,
+                topic: "Menentukan Nilai Terkecil",
+                title: "Soal 10: Menentukan Nilai Terkecil Rasio $2:5$",
+                text: "Dalam perbandingan dua besaran $2 : 5$, besaran terbesar yang diketahui nilainya adalah $30$. Berapakah nilai besaran terkecil yang belum diketahui?",
+                expected: 12,
+                varName: "Besaran Terkecil",
+                solutionSteps: [
+                    "Angka rasio terbesar = 5 (nilainya 30), angka rasio terkecil = 2.",
+                    "Faktor Pengali: $\\text{Faktor} = 30 \\div 5 = 6$",
+                    "Besaran Terkecil: $2 \\times 6 = 12$",
+                    "Jadi, nilai besaran terkecil tersebut adalah **12**."
+                ]
+            }
+        ];
+
+        /**
+         * Parser kata-angka Bahasa Indonesia sederhana
+         * Mengubah "dua belas" -> 12, "dua puluh" -> 20, "empat puluh delapan" -> 48, dst.
+         */
+        function parseIndonesianNumberWord(text) {
+            if (!text) return null;
+            let str = text.trim().toLowerCase();
+
+            // Mapping dasar
+            const basicMap = {
+                'nol': 0, 'kosong': 0, 'satu': 1, 'dua': 2, 'tiga': 3, 'empat': 4,
+                'lima': 5, 'enam': 6, 'tujuh': 7, 'delapan': 8, 'sembilan': 9,
+                'sepuluh': 10, 'sebelas': 11
+            };
+
+            if (basicMap[str] !== undefined) return basicMap[str];
+
+            // Kata bertingkat "belas" (contoh: dua belas -> 12)
+            if (str.endsWith('belas')) {
+                const prefix = str.replace('belas', '').trim();
+                if (basicMap[prefix]) return 10 + basicMap[prefix];
+            }
+
+            // Ribuan (contoh: empat puluh lima ribu)
+            if (str.includes('ribu')) {
+                const parts = str.split('ribu').map(s => s.trim());
+                const thousandsVal = parseIndonesianNumberWord(parts[0]);
+                const restVal = parts[1] ? parseIndonesianNumberWord(parts[1]) : 0;
+                if (thousandsVal !== null) {
+                    return (thousandsVal * 1000) + (restVal || 0);
+                }
+            }
+
+            // Puluhan (contoh: dua puluh, dua puluh lima, empat puluh delapan)
+            if (str.includes('puluh')) {
+                const parts = str.split('puluh').map(s => s.trim());
+                const tensDigit = basicMap[parts[0]];
+                if (tensDigit !== undefined) {
+                    let unitDigit = 0;
+                    if (parts[1]) {
+                        unitDigit = basicMap[parts[1]] || 0;
+                    }
+                    return (tensDigit * 10) + unitDigit;
+                }
+            }
+
+            return null;
+        }
+
+        /**
+         * Menilai jawaban siswa dengan logika toleransi tinggi (10pt / 5pt / 0pt)
+         */
+        function evaluateAnswer(rawInput, expectedNum) {
+            if (!rawInput || rawInput.trim() === '') {
+                return { score: 0, type: 'WRONG', textParsed: 'Kosong', note: 'Tidak diisi.' };
+            }
+
+            let cleaned = rawInput.trim().toLowerCase();
+
+            // 1. Bersihkan prefix/suffix seperti 'q = ', 'rp ', 'rp.', ' x=', dsb.
+            cleaned = cleaned.replace(/^([a-z\s]+)=/i, ''); // hapus 'Q ='
+            cleaned = cleaned.replace(/^rp\.?\s*/i, '');     // hapus 'Rp '
+            cleaned = cleaned.replace(/\s*orang$/i, '');    // hapus ' orang'
+            cleaned = cleaned.replace(/\s*bibit$/i, '');    // hapus ' bibit'
+            cleaned = cleaned.trim();
+
+            // Hapus titik ribuan jika penulisan format angka (misal 45.000 -> 45000)
+            let numericString = cleaned.replace(/\./g, '');
+
+            // 2. CEK PENILAIAN SEMPURNA (10 POIN): Angka Murni / Variabel
+            if (/^\d+$/.test(numericString)) {
+                const parsedVal = parseInt(numericString, 10);
+                if (parsedVal === expectedNum) {
+                    return {
+                        score: 10,
+                        type: 'FULL',
+                        textParsed: parsedVal.toString(),
+                        note: 'Sempurna! Jawaban tepat dalam bentuk angka.'
+                    };
+                }
+            }
+
+            // 3. CEK PENILAIAN SETENGAH (5 POIN): Kata Angka Bahasa Indonesia
+            const wordParsedVal = parseIndonesianNumberWord(cleaned);
+            if (wordParsedVal !== null && wordParsedVal === expectedNum) {
+                return {
+                    score: 5,
+                    type: 'PARTIAL',
+                    textParsed: `"${rawInput}" (${wordParsedVal})`,
+                    note: 'Jawaban benar secara konsep, namun disarankan menggunakan angka matematika.'
+                };
+            }
+
+            // 4. JAWABAN SALAH (0 POIN)
+            return {
+                score: 0,
+                type: 'WRONG',
+                textParsed: rawInput,
+                note: `Kurang tepat. Hasil yang benar adalah ${expectedNum}.`
+            };
+        }
+
+        function triggerKaTeX() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function showScreen(screenId) {
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-assessment').classList.add('hidden');
+            document.getElementById('screen-results').classList.add('hidden');
+
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            setTimeout(triggerKaTeX, 50);
+        }
+
+        function startAssessment() {
+            const namaInput = document.getElementById('input-nama').value.trim();
+
+            if (!namaInput) {
+                alert("Silakan isi nama kamu terlebih dahulu!");
+                return;
+            }
+
+            currentUser.name = namaInput;
+
+            // Update Header Badge
+            document.getElementById('badge-nama').textContent = currentUser.name;
+            document.getElementById('header-user-badge').classList.remove('hidden');
+            document.getElementById('header-user-badge').classList.add('flex');
+
+            currentQuestionIndex = 0;
+            renderGridNav();
+            loadQuestion(0);
+            showScreen('screen-assessment');
+        }
+
+        function renderGridNav() {
+            const gridContainer = document.getElementById('question-grid-nav');
+            gridContainer.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => jumpToQuestion(idx);
+                btn.className = `h-7 text-xs font-bold rounded-lg border transition-all flex items-center justify-center ${getGridBtnStyle(idx)}`;
+                btn.textContent = idx + 1;
+                gridContainer.appendChild(btn);
+            });
+
+            // Update answered badge count
+            const answeredCount = userAnswers.filter(a => a.trim() !== '').length;
+            document.getElementById('answered-count-badge').textContent = `Terjawab: ${answeredCount}/10`;
+        }
+
+        function getGridBtnStyle(idx) {
+            const isAnswered = userAnswers[idx].trim() !== '';
+            const isCurrent = idx === currentQuestionIndex;
+
+            if (isCurrent) {
+                return 'bg-sky-600 text-white border-sky-600 ring-2 ring-sky-200';
+            } else if (isAnswered) {
+                return 'bg-emerald-100 text-emerald-800 border-emerald-300';
+            } else {
+                return 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200';
+            }
+        }
+
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questionsData[index];
+
+            document.getElementById('question-progress-text').textContent = `Soal ${index + 1} dari 10`;
+            document.getElementById('progress-bar-fill').style.width = `${((index + 1) / 10) * 100}%`;
+
+            document.getElementById('q-topic-badge').textContent = q.topic;
+            document.getElementById('question-content').innerHTML = `
+                <h4 class="font-bold text-slate-800 text-base">${q.title}</h4>
+                <div>${q.text}</div>
+            `;
+
+            const inputEl = document.getElementById('answer-input');
+            inputEl.value = userAnswers[index];
+
+            // Toggle prev/next buttons
+            document.getElementById('btn-prev').disabled = index === 0;
+            document.getElementById('btn-prev').style.opacity = index === 0 ? '0.5' : '1';
+
+            if (index === questionsData.length - 1) {
+                document.getElementById('btn-next').classList.add('hidden');
+            } else {
+                document.getElementById('btn-next').classList.remove('hidden');
+            }
+
+            renderGridNav();
+            setTimeout(triggerKaTeX, 30);
+        }
+
+        function saveCurrentAnswer() {
+            const val = document.getElementById('answer-input').value;
+            userAnswers[currentQuestionIndex] = val;
+            renderGridNav();
+        }
+
+        function clearCurrentAnswer() {
+            document.getElementById('answer-input').value = '';
+            saveCurrentAnswer();
+        }
+
+        function navigateQuestion(step) {
+            saveCurrentAnswer();
+            const newIdx = currentQuestionIndex + step;
+            if (newIdx >= 0 && newIdx < questionsData.length) {
+                loadQuestion(newIdx);
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            saveCurrentAnswer();
+            loadQuestion(idx);
+        }
+
+        function confirmSubmit() {
+            saveCurrentAnswer();
+            const emptyCount = userAnswers.filter(a => a.trim() === '').length;
+
+            if (emptyCount > 0) {
+                const proceed = window.confirm(`Masih ada ${emptyCount} soal yang belum diisi. Yakin ingin mengumpulkan sekarang?`);
+                if (!proceed) return;
+            }
+
+            calculateAndShowResults();
+        }
+
+        function calculateAndShowResults() {
+            let totalScore = 0;
+            let fullCount = 0;
+            let partialCount = 0;
+            let wrongCount = 0;
+
+            const solutionsContainer = document.getElementById('solutions-container');
+            solutionsContainer.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const evalRes = evaluateAnswer(userAns, q.expected);
+
+                totalScore += evalRes.score;
+
+                if (evalRes.type === 'FULL') fullCount++;
+                else if (evalRes.type === 'PARTIAL') partialCount++;
+                else wrongCount++;
+
+                // Build Solutions Card Item
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-5 border shadow-sm space-y-3 ${
+                    evalRes.score === 10 ? 'border-emerald-200 bg-emerald-50/20' :
+                    evalRes.score === 5 ? 'border-amber-200 bg-amber-50/20' : 'border-rose-200 bg-rose-50/20'
+                }`;
+
+                let badgeColor = evalRes.score === 10 ? 'bg-emerald-100 text-emerald-800' :
+                                 evalRes.score === 5 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800';
+
+                let badgeText = evalRes.score === 10 ? 'BENAR (10 Poin)' :
+                                evalRes.score === 5 ? 'BENAR SEBAGIAN (5 Poin)' : 'SALAH (0 Poin)';
+
+                let stepsHtml = q.solutionSteps.map(step => `<li class="leading-relaxed">${step}</li>`).join('');
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span class="font-bold text-xs text-slate-500">Soal #${q.id} &bull; ${q.topic}</span>
+                        <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${badgeColor}">
+                            ${badgeText}
+                        </span>
+                    </div>
+
+                    <div class="text-xs text-slate-800 space-y-1">
+                        <div>${q.text}</div>
+                    </div>
+
+                    <!-- Detail Jawaban -->
+                    <div class="bg-white/80 p-3 rounded-xl border border-slate-200/80 text-xs space-y-1">
+                        <div><strong>Jawaban Kamu:</strong> <code class="bg-slate-100 px-1.5 py-0.5 rounded">${userAns || '(Kosong)'}</code></div>
+                        <div><strong>Kunci Jawaban:</strong> <code class="bg-sky-100 text-sky-800 font-bold px-1.5 py-0.5 rounded">${q.expected}</code></div>
+                        <div class="text-[11px] text-slate-500 pt-1 italic">${evalRes.note}</div>
+                    </div>
+
+                    <!-- Pembahasan Langkah demi Langkah -->
+                    <div class="text-xs pt-1 space-y-1.5">
+                        <div class="font-bold text-slate-700 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            Pembahasan Emas:
+                        </div>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-600 pl-1 bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
+                            ${stepsHtml}
+                        </ol>
+                    </div>
+                `;
+
+                solutionsContainer.appendChild(card);
+            });
+
+            // Populate Summary Dashboard
+            document.getElementById('res-student-name').textContent = currentUser.name;
+            document.getElementById('res-total-score').textContent = totalScore;
+
+            document.getElementById('stat-full').textContent = fullCount;
+            document.getElementById('stat-partial').textContent = partialCount;
+            document.getElementById('stat-wrong').textContent = wrongCount;
+
+            // Predicate & Qualitative Feedback
+            const predBadge = document.getElementById('res-predicate-badge');
+            const recBox = document.getElementById('res-recommendation-box');
+
+            if (totalScore >= 85) {
+                predBadge.className = "mt-3 px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200";
+                predBadge.textContent = "⭐⭐⭐ Sangat Baik (Mahir)";
+
+                recBox.className = "p-3.5 rounded-xl text-xs text-left leading-relaxed bg-emerald-50 text-emerald-900 border border-emerald-200";
+                recBox.innerHTML = `<strong>Umpan Balik Kualitatif:</strong> Luar biasa! Kamu telah menguasai konsep rasio dan faktor pengali dengan sangat baik. Kamu mampu menghubungkan nilai perbandingan dengan besaran sebenarnya secara akurat. Siap untuk pengayaan materi berikutnya!`;
+            } else if (totalScore >= 70) {
+                predBadge.className = "mt-3 px-4 py-1.5 rounded-full text-xs font-bold bg-sky-100 text-sky-800 border border-sky-200";
+                predBadge.textContent = "⭐⭐ Baik (Cukup Mahir)";
+
+                recBox.className = "p-3.5 rounded-xl text-xs text-left leading-relaxed bg-sky-50 text-sky-900 border border-sky-200";
+                recBox.innerHTML = `<strong>Umpan Balik Kualitatif:</strong> Bagus! Kamu sudah memahami alur perhitungan faktor pengali. Perhatikan saran penulisan jawaban angka matematika agar memperoleh poin penuh secara maksimal.`;
+            } else {
+                predBadge.className = "mt-3 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200";
+                predBadge.textContent = "⭐ Perlu Latihan Tambahan";
+
+                recBox.className = "p-3.5 rounded-xl text-xs text-left leading-relaxed bg-amber-50 text-amber-900 border border-amber-200";
+                recBox.innerHTML = `<strong>Umpan Balik Kualitatif:</strong> Tetap semangat! Pelajari kembali rumus emas faktor pengali: $\\text{Faktor} = \\text{Besaran Diketahui} \\div \\text{Rasio Diketahui}$. Cermati langkah pembahasan pada tiap nomor di bawah ini.`;
+            }
+
+            showScreen('screen-results');
+        }
+
+        function resetAssessment() {
+            userAnswers = new Array(10).fill('');
+            currentQuestionIndex = 0;
+            showScreen('screen-welcome');
+        }
+
+        // Initialize KaTeX on first load
+        window.onload = function() {
+            triggerKaTeX();
+        };
+    </script>
+</body>
+</html>

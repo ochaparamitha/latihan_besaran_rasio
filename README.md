@@ -1,0 +1,1 @@
+# latihan_besaran_rasio
